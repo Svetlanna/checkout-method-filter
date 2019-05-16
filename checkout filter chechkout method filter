@@ -1,0 +1,30 @@
+
+add_filter( 'woocommerce_package_rates', 'bbloomer_woocommerce_tiered_shipping', 9999, 2 );
+
+function bbloomer_woocommerce_tiered_shipping( $rates, $package ) {
+
+    if ( WC()->cart->cart_contents_weight <= 500 ) {
+
+        if ( isset( $rates['flat_rate:4'] ) ) unset( $rates['flat_rate:7'], $rates['flat_rate:5'] , $rates['flat_rate:6'] );
+
+    } elseif ( WC()->cart->cart_contents_weight <= 1000 ) {
+
+        if ( isset( $rates['flat_rate:5'] ) ) unset( $rates['flat_rate:4'], $rates['flat_rate:6'] ,$rates['flat_rate:7'] );
+
+    }  elseif ( WC()->cart->cart_contents_weight <= 1500 ) {
+
+        if ( isset( $rates['flat_rate:6'] ) ) unset( $rates['flat_rate:4'], $rates['flat_rate:5'] ,$rates['flat_rate:7'] );
+
+    }  elseif ( WC()->cart->cart_contents_weight <= 1501 ) {
+
+        if ( isset( $rates['flat_rate:7'] ) ) unset( $rates['flat_rate:4'], $rates['flat_rate:5'] ,$rates['flat_rate:6'] );
+
+    } else {
+
+        if ( isset( $rates['flat_rate:7'] ) ) unset( $rates['flat_rate:4'], $rates['flat_rate:5'], $rates['flat_rate:6'] );
+
+    }
+
+    return $rates;
+
+}
